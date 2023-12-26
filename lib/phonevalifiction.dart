@@ -79,10 +79,10 @@ class _PhoneState extends State<Phone> {
                   height: 20,
                 ),
                 Custombotton(
-                  lodar: false,
+                  lodar: isloding,
                   text: varify ? 'Varify':"Send otp",onPressed: (){
-                    
-                    
+
+
                       if(_formkey.currentState!.validate())
                       {
                         if(varify == false)
@@ -103,28 +103,31 @@ class _PhoneState extends State<Phone> {
                                 codeAutoRetrievalTimeout: (e) {
                                   toast.toastmessege('${e}');
                                 },).then((value){
+                                setState(()=> isloding = false);
                                 setState(() {
                                   varify = true;
                                 });
                               });
                               setState(() => isloding = false);
                             }catch(e){
+                              setState(() => isloding = false);
                               toast.toastmessege("$e");
                             }
                           }else{
                           try{
+                            setState(()=> isloding = true);
                             PhoneAuthCredential credential = PhoneAuthProvider.credential(
                               verificationId: verifyid,
                               smsCode: otp.text.trim(),
                             );
                             _auth.signInWithCredential(credential).then((value) {
-                              Navigator.push(context, CupertinoPageRoute(builder: (context) => Mainpage(),));
+                              setState(()=> isloding = false);
+                              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Mainpage(),));
                             }).onError((error, stackTrace) {
                               toast.toastmessege('$error');
                             });
-
-
-                          }catch(e){
+                           }catch(e){
+                            setState(()=> isloding = false);
                             toast.toastmessege('$e');
                           }
                         }
@@ -139,7 +142,7 @@ class _PhoneState extends State<Phone> {
                   children: [
                     Text("Don't have an account?"),
                     TextButton(onPressed: () {
-                      Navigator.push(context, CupertinoDialogRoute(builder: (context) => Singpage(), context: context));
+                      Navigator.pushReplacement(context, CupertinoDialogRoute(builder: (context) => Singpage(), context: context));
                     }, child: Text('Sign up')),
                   ],
                 ),

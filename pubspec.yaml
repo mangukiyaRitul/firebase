@@ -37,7 +37,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.7.2
   fluttertoast: ^8.2.2
-  firebase_core: ^2.15.0
+  firebase_core: ^2.15.1
+# stor data
+  firebase_database: ^10.2.5
+  cloud_firestore: ^4.8.5
+#  firebase_storage: ^11.2.6
+  google_sign_in: ^6.1.4
+  firebase_messaging: ^14.6.7
+  flutter_local_notifications: ^15.1.1
 
 dev_dependencies:
   flutter_test:

@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             // enableIMEPersonalizedLearning: ,
                           // enabled: false,
                           //   enableSuggestions: false,
-                            autofillHints: const [
+                              autofillHints: const [
                               AutofillHints.name,
                               AutofillHints.email,
                               AutofillHints.addressCityAndState,
@@ -83,22 +83,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 20,
                 ),
                 Custombotton(
-                  lodar: false,
-                  text: 'Login',onPressed: (){
+                  lodar: isloding,
+                  text:'Login',
+
+                  onPressed: (){
                     if(_formkey.currentState!.validate())
                       {
+                      try{
                         setState(() => isloding = true);
                         _auth.signInWithEmailAndPassword(
                             email: Emailcnrollar.text.trim(),
                             password: Passwordcnrollar.text.trim()).then((value) {
-                              // print('$value');
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => Mainpage() ,));
-                              setState(() => isloding = false);
+                          // print('$value');
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Mainpage() ,));
+                          setState(() => isloding = false);
                         }).onError((error, stackTrace){
-                          toast.toastmessege("$error");
+                          toast.toastmessege("${error}");
                           Future.delayed(Duration(seconds: 2));
                           setState(() => isloding = false);
                         });
+                      }
+                      on FirebaseAuthException catch(e){
+                        toast.toastmessege("${e.code}");
+                        setState(() => isloding = false);
+                      }
+                      catch(e){
+                        toast.toastmessege("$e");
+                        setState(() => isloding = false);
+                      }
                       }
                 }, ),
                 SizedBox(
@@ -109,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Text("Don't have an account?"),
                     TextButton(onPressed: () {
-                      Navigator.push(context, CupertinoDialogRoute(builder: (context) => Singpage(), context: context));
+                      Navigator.pushReplacement(context, CupertinoDialogRoute(builder: (context) => Singpage(), context: context));
                     }, child: Text('Sign up')),
                   ],
                 ),
@@ -136,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                  color: Colors.white60,
                   lodar: false,
                   text: 'Login With Phone',onPressed: () {
-                   Navigator.push(context, CupertinoPageRoute(builder: (context) => Phone(),));
+                   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => Phone(),));
                 }
                 ),
               ],

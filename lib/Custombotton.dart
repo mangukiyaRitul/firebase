@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class Custombotton extends StatelessWidget {
   final String text;
   final Color? color;
+  final Color? textolor;
   final void Function()? onPressed;
   final bool? lodar;
    Custombotton({
@@ -13,6 +14,7 @@ class Custombotton extends StatelessWidget {
     this.onPressed,
      this.lodar = false,
       this.color = Colors.deepPurple,
+      this.textolor = Colors.black,
   });
 
   @override
@@ -28,6 +30,6 @@ class Custombotton extends StatelessWidget {
           //     horizontal: 40.0, vertical: 20.0),
         ),
         onPressed: onPressed,
-        child: lodar!  ? CupertinoActivityIndicator(color: Colors.white,) :Text("$text",style: TextStyle(color: Colors.white,fontSize: 20),));
+        child: lodar!  ? CupertinoActivityIndicator(color: textolor,) :Text("$text",style: TextStyle(color: Colors.white,fontSize: 20),));
   }
 }

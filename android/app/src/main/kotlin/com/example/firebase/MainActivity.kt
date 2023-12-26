@@ -1,4 +1,4 @@
-package com.filre.firebase
+package com.firebase.loginproject
 
 import io.flutter.embedding.android.FlutterActivity
 
